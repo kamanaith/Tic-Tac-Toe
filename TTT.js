@@ -26,18 +26,23 @@ init();
 function init() {
   boxes.forEach((box) => box.addEventListener("click", clicked));
   resetvalue.addEventListener("click", reset);
-  playerturn.textContent = ` ${currentplayer}`;
+  playerturn.textContent = ` ${currentplayer}'s turn:`;
   ongoinggame = true;
 }
 // onclicking
 function clicked() {
+    if(!ongoinggame)
+         return;
   const id = this.getAttribute("id");
-  if (originally[id] != " ") {
+  if (originally[id] !== " ") {
     return;
   } else updatebox(id, this);
-  changeplayer();
-  checkWinner();
-  checktie();
+  checkWinner()
+  if (ongoinggame) {
+    changeplayer();
+  }
+  
+//   checktie();
 
   console.log(originally);
 }
@@ -45,8 +50,9 @@ function clicked() {
 // reset
 function reset() {
   originally = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-  playerturn.textContent = `${currentplayer}`;
+  playerturn.textContent = `${currentplayer}'s turn:`;
   currentplayer = "X";
+  message.textContent = "";
   boxes.forEach((box) => (box.textContent = " "));
   ongoinggame = true;
 }
@@ -54,7 +60,7 @@ function reset() {
 // changing player
 function changeplayer() {
   currentplayer = currentplayer == "X" ? "O" : "X";
-  playerturn.textContent = `${currentplayer}`;
+  playerturn.textContent = `${currentplayer}'s turn:`;
 }
 
 // update box
@@ -65,36 +71,28 @@ function updatebox(id, box) {
 
 // checking winner
 function checkWinner() {
-  console.log("");
-
   for (let i = 0; i < winConditions.length; i++) {
     const [a, b, c] = winConditions[i];
     console.log(a, b, c);
 
-    console.log("boxes content", boxes[a].textContent == currentplayer);
-
     if (
-      boxes[a].textContent == currentplayer &&
-      boxes[b].textContent == currentplayer &&
-      boxes[c].textContent == currentplayer
+      originally[a] === currentplayer &&
+      originally[b] === currentplayer &&
+      originally[c] === currentplayer
     ) {
       console.log("entered");
 
-      message.textContent = `${this.currentplayer} is winner`;
-    } else {
-      checktie();
-    }
-  }
-}
-
-// checking tie
-function checktie() {
-  for (let i = 0; i < winConditions.length; i++) {
-    if (originally[i] != "") {
-      //   return (message.textContent = `its a tie. RESTART THE GAME?`);
-    } else {
+      message.textContent = `Hurreyyyy!!!!! ${currentplayer} is winner`;
+      ongoinggame = false;
       return;
-    }
+    } 
+      checktie();
   }
-  return;
 }
+function checktie() { 
+    if (!originally.includes(" ") && ongoinggame) {
+         (message.textContent = `its a tie. RESTART THE GAME?`);
+        ongoinggame = false;
+    } 
+  }
+

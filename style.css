@@ -11,8 +11,13 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 nav{
     text-align: center;
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    font-size: 25px;
     background-color: black;
     color: white;
     font-style: italic;
@@ -33,17 +38,22 @@ section{
 
 }
 .container div{
-    border: 2px solid white;
+    border: 3px solid white;
+    border-radius: 5px;
     padding: 50px;
     color: white;
 }
 .reset{
     align-items: center;
     cursor: pointer;
-    margin: 2%;
+    margin: 1%;
+    border-radius: 5px;
     padding: 8px;
 }
 .message{
-    font-size: large;
+    font-size: 35px;
+    padding: 4px;
+    font-family: cursive;
+    background-color: black;
     color: white;
 }
